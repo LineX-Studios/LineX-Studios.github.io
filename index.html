@@ -3,8 +3,8 @@
 <script>
     async function fetchActivePlayers() {
         try {
-            // REPLACE WITH YOUR RENDER.COM URL
-            const response = await fetch('https://foxtrot-api.onrender.com/count');
+            // Notice we use /count here to GET the data
+            const response = await fetch('https://foxtrot-api.vercel.app/count');
             const data = await response.json();
             
             document.getElementById('active-players').innerText = data.active;
@@ -13,9 +13,9 @@
         }
     }
 
-    // Fetch immediately on page load
+    // Fetch immediately when the website loads
     fetchActivePlayers();
     
-    // Update the number every 30 seconds while they have the website open
+    // Automatically update the number every 30 seconds
     setInterval(fetchActivePlayers, 30000);
 </script>
