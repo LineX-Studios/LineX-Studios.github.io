@@ -1,26 +1,113 @@
-<div style="font-family: Arial, sans-serif; background: #1a1a1a; color: #fff; padding: 20px; border-radius: 8px; width: 300px;">
-    <h3 style="margin-top: 0; color: #ff5555;">🦊 Foxtrot Stats</h3>
-    <p>🟢 Active Right Now: <strong id="stat-active">Loading...</strong></p>
-    <p>🌍 All-Time Players: <strong id="stat-alltime">Loading...</strong></p>
-    <p>⏱️ Total Hours Played: <strong id="stat-hours">Loading...</strong></p>
-</div>
-
-<script>
-    async function fetchFoxtrotStats() {
-        try {
-            const response = await fetch('https://foxtrot-api.vercel.app/count');
-            const data = await response.json();
-            
-            document.getElementById('stat-active').innerText = data.active;
-            document.getElementById('stat-alltime').innerText = data.allTime;
-            document.getElementById('stat-hours').innerText = data.hours + " hrs";
-        } catch (error) {
-            document.getElementById('stat-active').innerText = "Offline";
-            document.getElementById('stat-alltime').innerText = "Offline";
-            document.getElementById('stat-hours').innerText = "Offline";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Foxtrot Client Stats</title>
+    <style>
+        /* Make the whole background dark gray and center everything */
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #1a1a1a; 
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh; /* Takes up the full height of the browser */
         }
-    }
 
-    fetchFoxtrotStats();
-    setInterval(fetchFoxtrotStats, 30000); // Refreshes every 30 seconds
-</script>
+        /* The box holding the logo and stats */
+        .stats-container {
+            background-color: #242424; /* Slightly lighter gray for the box */
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6); /* Cool drop shadow */
+            text-align: center;
+            width: 100%;
+            max-width: 640px; /* Matches your logo width perfectly */
+            box-sizing: border-box;
+        }
+
+        /* Logo styling to make sure it fits the 640x180 aspect ratio */
+        .logo {
+            width: 100%;
+            max-width: 640px;
+            height: auto; 
+            margin-bottom: 30px;
+            border-radius: 8px; /* Optional: rounds the corners of the logo */
+        }
+
+        /* Individual rows for each statistic */
+        .stat-item {
+            font-size: 1.2rem;
+            margin: 15px 0;
+            display: flex;
+            justify-content: space-between; /* Puts label on left, number on right */
+            align-items: center;
+            padding: 15px 25px;
+            background-color: #1a1a1a; /* Dark background for the row */
+            border-radius: 8px;
+            border: 1px solid #333;
+        }
+
+        .stat-label {
+            color: #bbbbbb;
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-weight: bold;
+            color: #ff5555; /* The Foxtrot red color */
+            font-size: 1.4rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="stats-container">
+        <img src="YOUR_LOGO_LINK_HERE" alt="Foxtrot Logo" class="logo">
+        
+        <div class="stat-item">
+            <span class="stat-label">🟢 Active Right Now:</span>
+            <span class="stat-value" id="stat-active">Loading...</span>
+        </div>
+        
+        <div class="stat-item">
+            <span class="stat-label">🌍 All-Time Players:</span>
+            <span class="stat-value" id="stat-alltime">Loading...</span>
+        </div>
+        
+        <div class="stat-item">
+            <span class="stat-label">⏱️ Total Hours Played:</span>
+            <span class="stat-value" id="stat-hours">Loading...</span>
+        </div>
+    </div>
+
+    <script>
+        async function fetchFoxtrotStats() {
+            try {
+                // REMEMBER TO USE YOUR ACTUAL VERCEL URL HERE!
+                const response = await fetch('https://foxtrot-api.vercel.app/count');
+                const data = await response.json();
+                
+                document.getElementById('stat-active').innerText = data.active;
+                document.getElementById('stat-alltime').innerText = data.allTime;
+                document.getElementById('stat-hours').innerText = data.hours + " hrs";
+            } catch (error) {
+                document.getElementById('stat-active').innerText = "Offline";
+                document.getElementById('stat-alltime').innerText = "Offline";
+                document.getElementById('stat-hours').innerText = "Offline";
+            }
+        }
+
+        // Fetch immediately when the page loads
+        fetchFoxtrotStats();
+        
+        // Auto-refresh the numbers every 30 seconds
+        setInterval(fetchFoxtrotStats, 30000); 
+    </script>
+
+</body>
+</html>
