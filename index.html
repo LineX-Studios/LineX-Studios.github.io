@@ -1,1 +1,21 @@
 <p>Currently playing Foxtrot: <span id="active-players" style="color: #ff5555; font-weight: bold;">Loading...</span></p>
+
+<script>
+    async function fetchActivePlayers() {
+        try {
+            // REPLACE WITH YOUR RENDER.COM URL
+            const response = await fetch('https://foxtrot-api.onrender.com/count');
+            const data = await response.json();
+            
+            document.getElementById('active-players').innerText = data.active;
+        } catch (error) {
+            document.getElementById('active-players').innerText = "Offline";
+        }
+    }
+
+    // Fetch immediately on page load
+    fetchActivePlayers();
+    
+    // Update the number every 30 seconds while they have the website open
+    setInterval(fetchActivePlayers, 30000);
+</script>
