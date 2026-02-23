@@ -1,21 +1,26 @@
-<p>Currently playing Foxtrot: <span id="active-players" style="color: #ff5555; font-weight: bold;">Loading...</span></p>
+<div style="font-family: Arial, sans-serif; background: #1a1a1a; color: #fff; padding: 20px; border-radius: 8px; width: 300px;">
+    <h3 style="margin-top: 0; color: #ff5555;">🦊 Foxtrot Stats</h3>
+    <p>🟢 Active Right Now: <strong id="stat-active">Loading...</strong></p>
+    <p>🌍 All-Time Players: <strong id="stat-alltime">Loading...</strong></p>
+    <p>⏱️ Total Hours Played: <strong id="stat-hours">Loading...</strong></p>
+</div>
 
 <script>
-    async function fetchActivePlayers() {
+    async function fetchFoxtrotStats() {
         try {
-            // Notice we use /count here to GET the data
             const response = await fetch('https://foxtrot-api.vercel.app/count');
             const data = await response.json();
             
-            document.getElementById('active-players').innerText = data.active;
+            document.getElementById('stat-active').innerText = data.active;
+            document.getElementById('stat-alltime').innerText = data.allTime;
+            document.getElementById('stat-hours').innerText = data.hours + " hrs";
         } catch (error) {
-            document.getElementById('active-players').innerText = "Offline";
+            document.getElementById('stat-active').innerText = "Offline";
+            document.getElementById('stat-alltime').innerText = "Offline";
+            document.getElementById('stat-hours').innerText = "Offline";
         }
     }
 
-    // Fetch immediately when the website loads
-    fetchActivePlayers();
-    
-    // Automatically update the number every 30 seconds
-    setInterval(fetchActivePlayers, 30000);
+    fetchFoxtrotStats();
+    setInterval(fetchFoxtrotStats, 30000); // Refreshes every 30 seconds
 </script>
